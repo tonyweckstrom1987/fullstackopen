@@ -67,3 +67,15 @@ server-->>browser: [{ content: "...", date: "..." }, ...]
 
 deactivate server
 ```
+### Exercise 0.6: New note in Single Page App
+
+```mermaid
+sequenceDiagram
+    participant browser
+    participant server
+browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+activate server
+server-->>browser: { content: "new_note_spa", date: "..." }
+deactivate server
+```
+
