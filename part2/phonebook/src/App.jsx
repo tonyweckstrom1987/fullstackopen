@@ -2,38 +2,54 @@ import { useState } from 'react'
 
 const App = () => {
   const [newName, setNewName] = useState('')
+  const [filter, setFilter] = useState('')
   const [persons, setPersons] = useState(initialPersons)
-const addName = (event) => {
-  event.preventDefault()
+  const [newNumber, setNewNumber] = useState('')
+  const addName = (event) => {
+    event.preventDefault()
 
-  if (persons.some((person) => person.name === newName)) {
-    alert(`${newName} is already added to phonebook`)
-    return
+    if (persons.some((person) => person.name === newName)) {
+      alert(`${newName} is already added to phonebook`)
+      return
+    }
+
+    const personObject = {
+      name: newName,
+      number: newNumber,
+    }
+
+    setPersons(persons.concat(personObject))
+setNewName('')
+setNewNumber('')
   }
 
-  const personObject = {
-    name: newName,
-  }
-
-  setPersons(persons.concat(personObject))
-  setNewName('')
-}
+  const personsToShow = filter
+    ? persons.filter((person) => person.name.toLowerCase().includes(filter.toLowerCase()))
+    : persons
 
   return (
     <div>
-{persons.map((person) => (
-<p key={person.name}>{person.name}</p>
-))}
-<form onSubmit={addName}>
-  <div>
-    name: <input value={newName} onChange={(event) => setNewName(event.target.value)} />
-  </div>
-  <div>
-    <button type="submit">add</button>
-  </div>
-</form>
+      <div>
+        filter shown with: <input value={filter} onChange={(event) => setFilter(event.target.value)} />
+      </div>
 
+      <div>
+        {personsToShow.map((person) => (
+<p key={person.name}>{person.name} {person.number}</p>
+        ))}
+        <form onSubmit={addName}>
+          <div>
+            name: <input value={newName} onChange={(event) => setNewName(event.target.value)} />
+          </div>
+          <div>
+            <button type="submit">add</button>
+          </div>
+          <div>
+  number: <input value={newNumber} onChange={(event) => setNewNumber(event.target.value)} />
+</div>
 
+        </form>
+      </div>
     </div>
   )
 }
