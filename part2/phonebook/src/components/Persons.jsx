@@ -1,13 +1,19 @@
-const Person = ({ person }) => (
-  <p>{person.name} {person.number}</p>
+const Person = ({ person, onDelete }) => (
+  <p>
+    {person.name} {person.number}
+    <button onClick={onDelete}>delete</button>
+  </p>
 )
 
-const Persons = ({ persons }) => (
+const Persons = ({ persons, onDelete }) => (
   <div>
     {persons.map((person) => (
-      <Person key={person.name} person={person} />
+      <Person key={person.name} person={person} onDelete={() => onDelete(person)} />
     ))}
   </div>
 )
 
 export default Persons
+
+
+
