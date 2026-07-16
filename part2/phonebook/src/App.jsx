@@ -18,7 +18,7 @@ const App = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/persons')
+      .get('http://localhost:3001/api/persons')
       .then((response) => {
         setPersons(response.data)
       })
@@ -34,7 +34,7 @@ const App = () => {
       const updatedPerson = { ...existingPerson, number: newNumber }
 
       axios
-        .put(`http://localhost:3001/persons/${existingPerson.id}`, updatedPerson)
+        .put(`http://localhost:3001/api/persons/${existingPerson.id}`, updatedPerson)
         .then((response) => {
           setPersons(persons.map((p) => (p.id !== existingPerson.id ? p : response.data)))
           setNotification({ message: `Updated ${response.data.name}`, type: 'success' })
@@ -52,7 +52,7 @@ const App = () => {
   }
 
   axios
-    .post('http://localhost:3001/persons', personObject)
+    .post('http://localhost:3001/api/persons', personObject)
     .then((response) => {
       setPersons(persons.concat(response.data))
       setNotification({ message: `Added ${response.data.name}`, type: 'success' })
@@ -65,7 +65,7 @@ const App = () => {
 const deletePerson = (person) => {
   if (window.confirm(`Delete ${person.name}?`)) {
     axios
-      .delete(`http://localhost:3001/persons/${person.id}`)
+      .delete(`http://localhost:3001/api/persons/${person.id}`)
       .then(() => {
         setPersons(persons.filter((p) => p.id !== person.id))
         setNotification({ message: `Deleted ${person.name}`, type: 'success' })
